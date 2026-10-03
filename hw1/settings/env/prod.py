@@ -1,0 +1,2 @@
+base.py
+DEBUG = False
