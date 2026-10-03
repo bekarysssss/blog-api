@@ -1,2 +1,5 @@
-base.py
+from settings.base import *
+
 DEBUG = False
+
+DATABASES = {}
