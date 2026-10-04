@@ -71,4 +71,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static_'
+STATIC_URL = '/static/'
+
+
+AUTH_USER_MODEL = 'auths.User'

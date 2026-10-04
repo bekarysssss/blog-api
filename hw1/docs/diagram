@@ -1,0 +1,36 @@
+Table "User" {
+  id int [pk]
+  email varchar 
+  first_name varchar
+  last_name varchar
+}
+
+Table "Category" {
+  id int [pk]
+  name varchar 
+}
+
+Table "Tag"{
+  id int [pk]
+  name varchar
+}
+
+Table "Post" {
+  id int [pk]
+  title varchar 
+  content text
+  author_id int [ref: > Post.id]
+  category_id int [ref: > Category.id]
+}
+
+Table "Comment" {
+  id int [pk]
+  text text 
+  post_id int [ref: > Post.id]
+  tag_id int [ref: > User.id]
+}
+
+Table "Post_Tag" {
+  post_id int [ref: > Post.id]
+  tag_id int [ref: > Tag.id]
+}
