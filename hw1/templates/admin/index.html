@@ -1,0 +1,38 @@
+{% extends "unfold/layouts/base.html" %}
+
+{% block content %}
+<div class="flex flex-col gap-8">
+    <h1 class="text-2xl font-semibold">Статистика Блога</h1>
+    
+    <div class="grid grid-cols-4 gap-4">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm text-gray-500">Пользователи</h3>
+            <p class="text-3xl font-bold mt-2">{{ users_count }}</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm text-gray-500">Опубликовано</h3>
+            <p class="text-3xl text-green-500 font-bold mt-2">{{ posts_count }}</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm text-gray-500">Черновики</h3>
+            <p class="text-3xl text-yellow-500 font-bold mt-2">{{ drafts_count }}</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm text-gray-500">Комментарии</h3>
+            <p class="text-3xl text-blue-500 font-bold mt-2">{{ comments_count }}</p>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 w-1/2">
+        <h3 class="text-lg font-semibold mb-4">Топ-5 Авторов</h3>
+        <ul>
+            {% for author in top_authors %}
+            <li class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
+                <span>{{ author.first_name }} {{ author.last_name }} ({{ author.email }})</span>
+                <span class="font-bold">{{ author.post_count }} постов</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

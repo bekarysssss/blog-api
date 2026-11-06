@@ -3,6 +3,7 @@ from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     description = models.TextField(blank=True)
 
     def __str__(self) -> str:
@@ -10,7 +11,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
-
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     def __str__(self) -> str:
         return self.name
 
@@ -28,6 +29,14 @@ class Post(models.Model):
         null=True,
         related_name='posts'
     )
+
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    status = models.CharField(
+        max_length=20, 
+        choices=[('published', 'Опубликован'), ('draft', 'Черновик')], 
+        default='published'
+    )
+
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

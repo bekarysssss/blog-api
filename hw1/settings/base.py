@@ -1,5 +1,6 @@
 from pathlib import Path
 from .conf import SECRET_KEY, DEBUG
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -9,6 +10,9 @@ DEBUG = DEBUG
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,7 +39,7 @@ ROOT_URLCONF = 'settings.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'hw1' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,7 +66,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -75,3 +82,56 @@ STATIC_URL = '/static/'
 
 
 AUTH_USER_MODEL = 'auths.User'
+
+UNFOLD = {
+    "SITE_TITLE": "Мой Блог",
+    "SITE_HEADER": "Управление блогом",
+    "SITE_ICON": "rocket", 
+    "DASHBOARD_CALLBACK": "apps.blog.callbacks.dashboard_callback",
+
+    "COLORS": {
+        "primary": { 
+            "50": "250 253 255",
+            "100": "241 249 255",
+            "200": "225 242 254",
+            "300": "186 228 253",
+            "400": "141 207 252",
+            "500": "84 174 250",
+            "600": "43 134 245",
+            "700": "26 103 227",
+            "800": "27 82 191",
+            "900": "28 70 151",
+            "950": "21 44 91",
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": "ОБЗОР",
+                "separator": True,
+                "items": [
+                    {"title": "Дашборд", "icon": "dashboard", "link": reverse_lazy("admin:index")},
+                ],
+            },
+            {
+                "title": "КОНТЕНТ",
+                "separator": True,
+                "items": [
+                    {"title": "Посты", "icon": "article", "link": reverse_lazy("admin:blog_post_changelist")},
+                    {"title": "Комментарии", "icon": "forum", "link": reverse_lazy("admin:blog_comment_changelist")},
+                    {"title": "Категории", "icon": "category", "link": reverse_lazy("admin:blog_category_changelist")},
+                    {"title": "Теги", "icon": "label", "link": reverse_lazy("admin:blog_tag_changelist")},
+                ],
+            },
+            {
+                "title": "ПОЛЬЗОВАТЕЛИ И ДОСТУП",
+                "separator": True,
+                "items": [
+                    {"title": "Группы", "icon": "shield", "link": reverse_lazy("admin:auth_group_changelist")},
+                ],
+            },
+        ],
+    },
+}
