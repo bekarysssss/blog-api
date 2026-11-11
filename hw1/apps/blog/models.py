@@ -29,6 +29,9 @@ class Post(models.Model):
         null=True,
         related_name='posts'
     )
+    class Status(models.TextChoices):
+        DRAFT = 'draft', 'Черновик'
+        PUBLISHED = 'published', 'Опубликован'
 
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     status = models.CharField(
